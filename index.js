@@ -1,3 +1,5 @@
+'use strict';
+
 const net = require('net');
 const http = require('http');
 const https = require('https');
