@@ -1,0 +1,28 @@
+language: node_js
+
+node_js:
+  - 'node'
+  - '6'
+  - '5.7'
+  - '5.6'
+  - '4'
+
+cache:
+  directories:
+    - $HOME/.npm
+    - node_modules
+
+before_install:
+  - 'node -e "process.exit(Number(process.version.match(/^v(\d+)/)[1])>=6?0:1)" || npm install -g npm@3.x-latest'
+
+before_script:
+  - npm prune
+  - npm update
+
+deploy:
+  on:
+    branch: master
+    node: 6
+  provider: npm
+  email: npm@gatwal.com
+  api_key: $NPM_TOKEN
