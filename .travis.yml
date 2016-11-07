@@ -15,9 +15,9 @@ cache:
 before_install:
   - 'node -e "process.exit(Number(process.version.match(/^v(\d+)/)[1])>=6?0:1)" || npm install -g npm@3.x-latest'
 
-before_script:
-  - npm prune
+install:
   - npm update
+  - npm prune
 
 deploy:
   on:
