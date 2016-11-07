@@ -7,7 +7,7 @@ const process = require('process');
 
 const VERSION = parseFloat(process.version.substring(1));
 
-if (version < 5.7) {
+if (VERSION < 5.7) {
   isListeningPolyfill();
 }
 

@@ -30,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/gurpreetatwal/incito/issues"
   },
-  "homepage": "https://github.com/gurpreetatwal/incito#readme"
+  "homepage": "https://github.com/gurpreetatwal/incito#readme",
+  "devDependencies": {
+    "ava": "^0.16.0"
+  }
 }
