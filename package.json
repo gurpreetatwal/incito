@@ -1,0 +1,31 @@
+{
+  "name": "incito",
+  "version": "0.0.0",
+  "description": "Easiest way to turn a function into a web server!",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gurpreetatwal/incito.git"
+  },
+  "keywords": [
+    "http",
+    "https",
+    "serve",
+    "express",
+    "koa",
+    "testing",
+    "superagent",
+    "request",
+    "axios",
+    "got"
+  ],
+  "author": "Gurpreet Atwal <git@gatwal.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gurpreetatwal/incito/issues"
+  },
+  "homepage": "https://github.com/gurpreetatwal/incito#readme"
+}
