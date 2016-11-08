@@ -12,9 +12,6 @@ cache:
     - $HOME/.npm
     - node_modules
 
-before_install:
-  - 'node -e "process.exit(Number(process.version.match(/^v(\d+)/)[1])>=6?0:1)" || npm install -g npm@3.x-latest'
-
 install:
   - npm update
   - npm prune
@@ -26,8 +23,3 @@ deploy:
   provider: npm
   email: npm@gatwal.com
   api_key: $NPM_TOKEN
-
-after_deploy:
-  - git config credential.helper "store --file=.git/credentials"
-  - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-  - git push --tags
