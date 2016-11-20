@@ -1,6 +1,6 @@
 const net = require('net');
 const test = require('ava');
-const incito = require('./');
+const incito = require('../');
 
 test('basic', t => {
   const server = incito();
