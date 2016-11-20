@@ -7,6 +7,7 @@ const shim = require('./lib/listening-shim');
 
 shim.register(net.Server);
 
+// eslint-disable-next-line no-unused-vars
 function incito(handler, type) {
 
   const isServer = handler instanceof net.Server;

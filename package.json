@@ -4,7 +4,8 @@
   "description": "Easiest way to turn a function into a web server!",
   "main": "index.js",
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "posttest": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,14 @@
   },
   "homepage": "https://github.com/gurpreetatwal/incito#readme",
   "devDependencies": {
-    "ava": "^0.16.0"
+    "ava": "^0.16.0",
+    "eslint": "^3.10.2"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es6": true,
+      "node": true
+    }
   }
 }
