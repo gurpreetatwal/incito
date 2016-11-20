@@ -2,14 +2,10 @@
 
 const net = require('net');
 const http = require('http');
-const https = require('https');
-const process = require('process');
 
-const VERSION = parseFloat(process.version.substring(1));
+const shim = require('./lib/listening-shim');
 
-if (VERSION < 5.7) {
-  isListeningPolyfill();
-}
+shim.register(net.Server);
 
 function incito(handler, type) {
 
@@ -24,23 +20,11 @@ function incito(handler, type) {
 
   Object.defineProperty(server, 'port', {
     enumerable: true,
+    configurable: true,
     get: () => server.address().port,
   });
 
   return server;
-}
-
-/**
- * @see https://github.com/nodejs/node/blob/v5.7.0/lib/net.js#L1384
- */
-function isListeningPolyfill() {
-  Object.defineProperty(net.Server.prototype, 'listening', {
-    get: function() {
-      return !!this._handle;
-    },
-    configurable: true,
-    enumerable: true
-  });
 }
 
 module.exports = incito;
