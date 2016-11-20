@@ -84,6 +84,10 @@ test('normalizeArg', t => {
 
 test.serial.cb('normalizeArg - warning - tls', t => {
 
+  if (!process.emitWarning) {
+    return t.end();
+  }
+
   const listener = warning => {
     t.is(warning.name, 'incito');
     t.true(warning.message.includes('tls'));
@@ -107,6 +111,10 @@ test.serial.cb('normalizeArg - warning - tls', t => {
 });
 
 test.serial.cb('normalizeArg - warning - https', t => {
+
+  if (!process.emitWarning) {
+    return t.end();
+  }
 
   const listener = warning => {
     t.is(warning.name, 'incito');
