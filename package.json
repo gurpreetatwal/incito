@@ -1,6 +1,6 @@
 {
   "name": "incito",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Easiest way to turn a function into a web server!",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,15 @@
   "engines": {
     "node": ">=4.0.0"
   },
+  "files": [
+    "index.js",
+    "lib"
+  ],
   "keywords": [
+    "net",
+    "tls",
+    "createServer",
+    "util",
     "http",
     "https",
     "serve",
