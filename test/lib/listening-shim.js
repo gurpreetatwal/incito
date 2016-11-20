@@ -5,7 +5,10 @@ const shim = require('../../lib/listening-shim');
 
 test('shim', t => {
 
-  function Mock() {}
+  function Mock() {
+    this._handle = 'test';
+  }
+
   shim.apply(Mock);
 
   const mock = new Mock();
@@ -25,6 +28,10 @@ test('shim', t => {
   t.falsy(descriptor.set);
   t.falsy(descriptor.value);
 
+  t.true(mock.listening);
+
+  mock._handle = 0;
+  t.false(mock.listening);
 });
 
 test('register - true', t => {
