@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "ava",
-    "posttest": "eslint .",
+    "posttest": "eslint . --cache",
     "precover": "nyc ava",
-    "cover": "nyc report --reporter=lcov"
+    "cover": "nyc report"
   },
   "repository": {
     "type": "git",
@@ -45,5 +45,9 @@
       "es6": true,
       "node": true
     }
+  },
+  "nyc": {
+    "cache": true,
+    "reporter": "lcov"
   }
 }
