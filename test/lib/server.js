@@ -8,6 +8,24 @@ const https = require('https');
 const process = require('process');
 const server = require('../../lib/server');
 
+test.serial.cb('warn', t => {
+
+  const emit = process.emitWarning;
+  const warn = global.console.warn;
+
+  delete process.emitWarning;
+  global.console.warn = function(msg) {
+    t.is(msg, 'incito: warning, test');
+    t.end();
+  }
+
+  server.warn('test');
+
+  process.emitWarning = emit;
+  global.console.warn = warn;
+
+});
+
 test('normalizeType', t => {
 
   t.is(server.normalizeType(net), net);
