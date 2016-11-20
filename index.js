@@ -1,31 +1,25 @@
 'use strict';
 
-const net = require('net');
-const http = require('http');
-
+const server = require('./lib/server');
 const shim = require('./lib/listening-shim');
 
-shim.register(net.Server);
+shim.register(require('net').Server);
 
-// eslint-disable-next-line no-unused-vars
-function incito(handler, type) {
+function incito(arg) {
 
-  const isServer = handler instanceof net.Server;
+  const instance = server.create(arg);
 
-  // TODO use the type parameter to allow user to decide the type of server they want
-  const server = isServer ? handler : http.createServer(handler);
-
-  if (!server.listening) {
-    server.listen(0);
+  if (!instance.listening) {
+    instance.listen(0);
   }
 
-  Object.defineProperty(server, 'port', {
+  Object.defineProperty(instance, 'port', {
     enumerable: true,
     configurable: true,
-    get: () => server.address().port,
+    get: () => instance.address().port,
   });
 
-  return server;
+  return instance;
 }
 
 module.exports = incito;
