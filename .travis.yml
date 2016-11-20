@@ -15,6 +15,10 @@ install:
   - npm update
   - npm prune
 
+after_success:
+  - npm run cover
+  - bash <(curl -s https://codecov.io/bash)
+
 deploy:
   on:
     tags: true

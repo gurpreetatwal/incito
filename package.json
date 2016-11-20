@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "ava",
-    "posttest": "eslint ."
+    "posttest": "eslint .",
+    "precover": "nyc ava",
+    "cover": "nyc report --reporter=lcov"
   },
   "repository": {
     "type": "git",
@@ -34,7 +36,8 @@
   "homepage": "https://github.com/gurpreetatwal/incito#readme",
   "devDependencies": {
     "ava": "^0.16.0",
-    "eslint": "^3.10.2"
+    "eslint": "^3.10.2",
+    "nyc": "^9.0.1"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
