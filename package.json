@@ -1,13 +1,13 @@
 {
   "name": "incito",
-  "version": "1.0.0",
   "description": "Easiest way to turn a function into a web server!",
   "main": "index.js",
   "scripts": {
     "test": "ava",
     "posttest": "eslint . --cache",
     "precover": "nyc ava",
-    "cover": "nyc report"
+    "cover": "nyc report",
+    "release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
