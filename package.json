@@ -6,8 +6,7 @@
     "test": "ava",
     "posttest": "npm run lint -s",
     "lint": "eslint . --cache",
-    "precover": "nyc ava",
-    "cover": "nyc report",
+    "cover": "nyc npm test -s",
     "release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
