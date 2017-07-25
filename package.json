@@ -46,9 +46,5 @@
     "ava": "^0.21.0",
     "eslint": "^4.2.0",
     "nyc": "^11.1.0"
-  },
-  "nyc": {
-    "cache": true,
-    "reporter": "lcov"
   }
 }
