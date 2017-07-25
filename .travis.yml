@@ -11,6 +11,10 @@ cache:
     - node_modules
     - .eslintcache
 
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
+
 install:
   - npm install
 
@@ -21,11 +25,11 @@ script:
 after_success:
   - test $TRAVIS_NODE_VERSION = 6 && bash <(curl -s https://codecov.io/bash)
 
-deploy:
-  on:
-    tags: true
-    node: 6
-  provider: npm
-  email: npm@gatwal.com
-  api_key: $NPM_TOKEN
-  skip_cleanup: true
+jobs:
+  include:
+    - stage: publish
+      node_js: '8'
+      install: npm install semantic-release
+      script: skip
+      after_success:
+        - TRAVIS_JOB_NUMBER="WORKAROUND.1" npm run release
