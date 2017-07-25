@@ -2,7 +2,7 @@
 
 const net = require('net');
 const test = require('ava');
-const incito = require('../');
+const incito = require('..');
 
 test('incito', t => {
 
@@ -11,7 +11,7 @@ test('incito', t => {
   t.truthy(instance.port);
   t.true(instance.listening);
 
-  let server = net.createServer();
+  const server = net.createServer();
   server.listen(34532);
 
   instance = incito(server);
@@ -26,4 +26,5 @@ test('incito', t => {
   t.falsy(descriptor.writable);
   t.falsy(descriptor.value);
   t.falsy(descriptor.set);
+
 });
