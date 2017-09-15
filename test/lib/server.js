@@ -17,7 +17,7 @@ test.serial.cb('warn', t => {
   global.console.warn = function(msg) {
     t.is(msg, 'incito: warning, test');
     t.end();
-  }
+  };
 
   server.warn('test');
 
@@ -40,13 +40,18 @@ test('normalizeType', t => {
   t.is(server.normalizeType(https), https);
   t.is(server.normalizeType('https'), https);
 
-  t.throws(function() {
-    server.normalizeType({})
+  let err;
+  err = t.throws(function() {
+    server.normalizeType({});
   }, TypeError);
 
-  t.throws(function() {
-    server.normalizeType('tron')
+  t.is(err.message, '"type" argument must be a string');
+
+  err = t.throws(function() {
+    server.normalizeType('tron');
   }, ReferenceError);
+
+  t.regex(err.message, /"type" argument must be one of: /);
 
 });
 
@@ -62,7 +67,7 @@ test('normalizeArg', t => {
     cert: 'my super secret certs',
   };
 
-  const fn  = server.normalizeArg(mock);
+  const fn = server.normalizeArg(mock);
   t.is(fn.listener, mock);
   t.is(fn.type, http);
   t.is(Object.keys(fn).length, 2);

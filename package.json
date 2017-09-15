@@ -4,9 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "ava",
-    "posttest": "eslint . --cache",
-    "precover": "nyc ava",
-    "cover": "nyc report",
+    "posttest": "npm run lint -s",
+    "lint": "eslint . --cache",
+    "cover": "nyc npm test -s",
     "release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
@@ -46,16 +46,5 @@
     "ava": "^0.21.0",
     "eslint": "^4.2.0",
     "nyc": "^11.1.0"
-  },
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "env": {
-      "es6": true,
-      "node": true
-    }
-  },
-  "nyc": {
-    "cache": true,
-    "reporter": "lcov"
   }
 }
