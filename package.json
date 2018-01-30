@@ -1,5 +1,6 @@
 {
   "name": "incito",
+  "version": "0.0.0-semantic-release",
   "description": "Easiest way to turn a function into a web server!",
   "main": "index.js",
   "scripts": {
