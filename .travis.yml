@@ -1,9 +1,9 @@
 language: node_js
 
 node_js:
+  - '10'
   - '8'
   - '6'
-  - '4'
 
 cache:
   directories:
@@ -15,10 +15,9 @@ branches:
   except:
     - /^v\d+\.\d+\.\d+$/
 
+before_install: dpkg --compare-versions `npm -v` ge 6.0 || npm i -g npm@latest
 install:
-  # --save flag needed b/c of https://github.com/npm/npm/issues/16901
-  - npm update --save false
-  - npm prune
+  - npm ci
 
 script:
   - npm test
