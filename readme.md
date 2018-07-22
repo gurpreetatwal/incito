@@ -39,6 +39,12 @@ const app = express();
 const server = incito(app);
 ```
 
+### koa http server
+```js
+const app = new Koa();
+const server = incito(app.callback());
+```
+
 ### other types of servers
 ```js
 const server = incito({
