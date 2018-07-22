@@ -1,12 +1,8 @@
 'use strict';
 
 const server = require('./lib/server');
-const shim = require('./lib/listening-shim');
-
-shim.register(require('net').Server);
 
 function incito(arg) {
-
   const instance = server.create(arg);
 
   if (!instance.listening) {
