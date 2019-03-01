@@ -44,10 +44,10 @@
   },
   "homepage": "https://github.com/gurpreetatwal/incito#readme",
   "devDependencies": {
-    "ava": "^1.0.1",
-    "eslint": "^5.0.1",
+    "ava": "^1.2.1",
+    "eslint": "^5.14.1",
     "greenkeeper-lockfile": "^1.15.1",
-    "nyc": "^13.2.0",
-    "semantic-release": "^15.0.0"
+    "nyc": "^13.3.0",
+    "semantic-release": "^15.13.3"
   }
 }
