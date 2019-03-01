@@ -7,8 +7,7 @@
     "test": "ava",
     "posttest": "npm run lint -s",
     "lint": "eslint . --cache",
-    "cover": "nyc npm test -s",
-    "release": "semantic-release"
+    "cover": "nyc npm test -s"
   },
   "repository": {
     "type": "git",

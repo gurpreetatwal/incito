@@ -8,12 +8,9 @@ node_js:
 cache:
   directories:
     - $HOME/.npm
-    - node_modules
     - .eslintcache
 
-branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
+if: tag IS blank # do not build tags
 
 before_install:
   - dpkg --compare-versions `npm -v` ge 6.0 || npm i -g npm@latest
@@ -29,7 +26,7 @@ script:
   - npm run cover
 
 after_success:
-  - test $TRAVIS_NODE_VERSION = 8 && bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash)
 
 after_script:
   - greenkeeper-lockfile-upload
@@ -37,5 +34,5 @@ after_script:
 jobs:
   include:
     - stage: publish
-      node_js: '8'
-      script: npm run release
+      node_js: '10'
+      script: npx semantic-release
