@@ -1,9 +1,9 @@
 language: node_js
 
 node_js:
+  - '12'
   - '10'
   - '8'
-  - '6'
 
 cache:
   directories:
@@ -11,9 +11,6 @@ cache:
     - .eslintcache
 
 if: tag IS blank # do not build tags
-
-before_install:
-  - dpkg --compare-versions `npm -v` ge 6.0 || npm i -g npm@latest
 
 install:
   - if [[ "$TRAVIS_BRANCH" = "greenkeeper/"* ]]; then npm install; else npm ci; fi
@@ -35,4 +32,4 @@ jobs:
   include:
     - stage: publish
       node_js: '10'
-      script: npx semantic-release
+      script: semantic-release
