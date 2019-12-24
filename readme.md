@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/incito"><img src="https://img.shields.io/npm/v/incito.svg?style=flat-square" alt="NPM Package"></a>
-  <a href="https://travis-ci.org/gurpreetatwal/incito"><img src="https://img.shields.io/travis/gurpreetatwal/incito/master.svg?style=flat-square" alt="Build Status"></a>
+  <a href="https://travis-ci.com/gurpreetatwal/incito"><img src="https://img.shields.io/travis/com/gurpreetatwal/incito/master?style=flat-square" alt="Build Status"></a>
   <a href="https://codecov.io/gh/gurpreetatwal/incito"><img src="https://img.shields.io/codecov/c/github/gurpreetatwal/incito.svg?style=flat-square" alt="Coverage"></a>
 </p>
 
