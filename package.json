@@ -47,6 +47,6 @@
     "eslint": "^6.1.0",
     "greenkeeper-lockfile": "^1.15.1",
     "nyc": "^15.0.0",
-    "semantic-release": "^15.13.19"
+    "semantic-release": "^16.0.0"
   }
 }
