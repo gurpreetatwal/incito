@@ -40,19 +40,20 @@ test('normalizeType', t => {
   t.is(server.normalizeType(https), https);
   t.is(server.normalizeType('https'), https);
 
-  let err;
-  err = t.throws(function() {
+  t.throws(function() {
     server.normalizeType({});
-  }, TypeError);
+  }, {
+    instanceOf: TypeError,
+    message: '"type" argument must be a string',
+  });
 
-  t.is(err.message, '"type" argument must be a string');
 
-  err = t.throws(function() {
+  t.throws(function() {
     server.normalizeType('tron');
-  }, ReferenceError);
-
-  t.regex(err.message, /"type" argument must be one of: /);
-
+  }, {
+    instanceOf: ReferenceError,
+    message: /"type" argument must be one of: /,
+  });
 });
 
 
