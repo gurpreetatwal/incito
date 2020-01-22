@@ -12,7 +12,11 @@ function incito(arg) {
   Object.defineProperty(instance, 'port', {
     enumerable: true,
     configurable: true,
-    get: () => instance.address().port,
+    get: () => {
+      // .address() will return `null` if the server has not yet emitted the 'listening' event
+      const address = instance.address();
+      return address ? address.port : null;
+    },
   });
 
   return instance;
