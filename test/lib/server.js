@@ -8,18 +8,22 @@ const https = require('https');
 const process = require('process');
 const server = require('../../lib/server');
 
-test.serial.cb('warn', t => {
+test.serial('warn', async t => {
 
   const emit = process.emitWarning;
   const warn = global.console.warn;
 
   delete process.emitWarning;
-  global.console.warn = function(msg) {
-    t.is(msg, 'incito: warning, test');
-    t.end();
-  };
+  const promise = new Promise(function(resolve) {
+    global.console.warn = function(msg) {
+      resolve(msg);
+    };
+  });
 
   server.warn('test');
+
+  const msg= await promise;
+  t.is(msg, 'incito: warning, test');
 
   process.emitWarning = emit;
   global.console.warn = warn;
@@ -106,20 +110,21 @@ test('normalizeArg', t => {
 
 });
 
-test.serial.cb('normalizeArg - warning - tls', t => {
+test.serial('normalizeArg - warning - tls', async t => {
 
   if (!process.emitWarning) {
-    return t.end();
+    return;
   }
 
-  const listener = warning => {
-    t.is(warning.name, 'incito');
-    t.true(warning.message.includes('tls'));
-    process.removeListener('warning', listener);
-    t.end();
-  };
+  const promise = new Promise(function(resolve) {
+    const listener = warning => {
+      process.removeListener('warning', listener);
+      resolve(warning);
+    };
 
-  process.on('warning', listener);
+    process.on('warning', listener);
+  });
+
 
   function mock() {}
   const args = server.normalizeArg({
@@ -132,22 +137,26 @@ test.serial.cb('normalizeArg - warning - tls', t => {
   t.is(typeof args.options, 'object');
   t.is(Object.keys(args).length, 3);
 
+  const warning = await promise;
+  t.is(warning.name, 'incito');
+  t.true(warning.message.includes('tls'));
 });
 
-test.serial.cb('normalizeArg - warning - https', t => {
+test.serial('normalizeArg - warning - https', async t => {
 
   if (!process.emitWarning) {
-    return t.end();
+    return;
   }
 
-  const listener = warning => {
-    t.is(warning.name, 'incito');
-    t.true(warning.message.includes('https'));
-    process.removeListener('warning', listener);
-    t.end();
-  };
+  const promise = new Promise(function(resolve) {
+    const listener = warning => {
+      process.removeListener('warning', listener);
+      resolve(warning);
+    };
 
-  process.on('warning', listener);
+    process.on('warning', listener);
+  });
+
 
   function mock() {}
   const args = server.normalizeArg({
@@ -160,6 +169,9 @@ test.serial.cb('normalizeArg - warning - https', t => {
   t.is(typeof args.options, 'object');
   t.is(Object.keys(args).length, 3);
 
+  const warning = await promise;
+  t.is(warning.name, 'incito');
+  t.true(warning.message.includes('https'));
 });
 
 test('create', t => {
