@@ -1,9 +1,8 @@
 language: node_js
 
 node_js:
-  - '14'
-  - '12'
-  - '10'
+  - '20'
+  - '18'
 
 cache:
   directories:
@@ -13,10 +12,7 @@ cache:
 if: tag IS blank # do not build tags
 
 install:
-  - if [[ "$TRAVIS_BRANCH" = "greenkeeper/"* ]]; then npm install; else npm ci; fi
-
-before_script:
-  - greenkeeper-lockfile-update
+  - npm ci
 
 script:
   - npm test
@@ -25,11 +21,8 @@ script:
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
-after_script:
-  - greenkeeper-lockfile-upload
-
 jobs:
   include:
     - stage: publish
-      node_js: '14'
+      node_js: '20'
       script: semantic-release
