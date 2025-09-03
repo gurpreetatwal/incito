@@ -79,6 +79,25 @@ test('normalizeArg', (t) => {
   t.is(Object.keys(noOptions).length, 3);
 });
 
+test('normalizeArg - koa', (t) => {
+  function listener() {}
+  const app = { callback: () => listener };
+
+  const result = server.normalizeArg(app);
+  t.is(result.type, http);
+  t.is(result.listener, listener);
+  t.is(Object.keys(result).length, 2);
+});
+
+test('normalizeArg - invalid input', (t) => {
+  for (const invalid of [null, 42, 'http', true, Symbol()]) {
+    t.throws(() => server.normalizeArg(invalid), {
+      instanceOf: TypeError,
+      message: '"arg" must be a function, Koa app, or config object',
+    });
+  }
+});
+
 test.serial('normalizeArg - warning - tls', async (t) => {
   const event = once(process, 'warning');
 

@@ -46,7 +46,7 @@ const server = incito(app);
 
 ```js
 const app = new Koa();
-const server = incito(app.callback());
+const server = incito(app);
 ```
 
 ### other types of servers
