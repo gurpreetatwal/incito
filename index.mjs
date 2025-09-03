@@ -1,5 +1,15 @@
 import { create } from './lib/server.mjs';
 
+/**
+ * Creates and starts a server instance
+ *
+ * @param {import('node:net').Server | Function | {
+ *   listener?: Function,
+ *   type?: string | import('node:net') | import('node:tls') | import('node:http') | import('node:https'),
+ *   options?: object
+ * }} [arg] - Server instance, listener function, or configuration object
+ * @returns {import('node:net').Server & { port: number | null }} Server instance with port property
+ */
 function incito(arg) {
   const instance = create(arg);
 
