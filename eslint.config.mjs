@@ -12,12 +12,7 @@ export default defineConfig([
     extends: ['js/recommended'],
     languageOptions: {globals: globals.node},
     rules: {
-      semi: 'error',
       eqeqeq: 'error',
-      indent: ['error', 2],
-      quotes: ['error', 'single'],
-      'no-trailing-spaces': 'error',
-      'comma-dangle': ['error', 'always-multiline'],
     },
   },
 ]);
