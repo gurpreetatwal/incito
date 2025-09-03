@@ -8,8 +8,7 @@ import test from 'ava';
 
 import * as server from '../../lib/server.mjs';
 
-test('normalizeType', t => {
-
+test('normalizeType', (t) => {
   t.is(server.normalizeType(net), net);
   t.is(server.normalizeType('net'), net);
 
@@ -22,25 +21,28 @@ test('normalizeType', t => {
   t.is(server.normalizeType(https), https);
   t.is(server.normalizeType('https'), https);
 
-  t.throws(function() {
-    server.normalizeType({});
-  }, {
-    instanceOf: TypeError,
-    message: '"type" argument must be a string',
-  });
+  t.throws(
+    function () {
+      server.normalizeType({});
+    },
+    {
+      instanceOf: TypeError,
+      message: '"type" argument must be a string',
+    },
+  );
 
-
-  t.throws(function() {
-    server.normalizeType('tron');
-  }, {
-    instanceOf: ReferenceError,
-    message: /"type" argument must be one of: /,
-  });
+  t.throws(
+    function () {
+      server.normalizeType('tron');
+    },
+    {
+      instanceOf: ReferenceError,
+      message: /"type" argument must be one of: /,
+    },
+  );
 });
 
-
-test('normalizeArg', t => {
-
+test('normalizeArg', (t) => {
   const noArg = server.normalizeArg();
   t.is(noArg.type, http);
   t.is(Object.keys(noArg).length, 1);
@@ -54,7 +56,6 @@ test('normalizeArg', t => {
   t.is(fn.listener, mock);
   t.is(fn.type, http);
   t.is(Object.keys(fn).length, 2);
-
 
   const noType = server.normalizeArg({
     listener: mock,
@@ -85,12 +86,10 @@ test('normalizeArg', t => {
   t.is(noOptions.listener, mock);
   t.is(typeof noOptions.options, 'object');
   t.is(Object.keys(noOptions).length, 3);
-
 });
 
-test.serial.cb('normalizeArg - warning - tls', t => {
-
-  const listener = warning => {
+test.serial.cb('normalizeArg - warning - tls', (t) => {
+  const listener = (warning) => {
     t.is(warning.name, 'incito');
     t.true(warning.message.includes('tls'));
     process.removeListener('warning', listener);
@@ -109,12 +108,10 @@ test.serial.cb('normalizeArg - warning - tls', t => {
   t.is(args.listener, mock);
   t.is(typeof args.options, 'object');
   t.is(Object.keys(args).length, 3);
-
 });
 
-test.serial.cb('normalizeArg - warning - https', t => {
-
-  const listener = warning => {
+test.serial.cb('normalizeArg - warning - https', (t) => {
+  const listener = (warning) => {
     t.is(warning.name, 'incito');
     t.true(warning.message.includes('https'));
     process.removeListener('warning', listener);
@@ -133,11 +130,9 @@ test.serial.cb('normalizeArg - warning - https', t => {
   t.is(args.listener, mock);
   t.is(typeof args.options, 'object');
   t.is(Object.keys(args).length, 3);
-
 });
 
-test('create', t => {
-
+test('create', (t) => {
   const noArg = server.create();
   t.true(noArg instanceof http.Server);
   t.is(noArg.listenerCount('request'), 0);
@@ -178,5 +173,4 @@ test('create', t => {
   t.true(options instanceof net.Server);
   t.is(options.listenerCount('request'), 0);
   t.true(options.allowHalfOpen);
-
 });

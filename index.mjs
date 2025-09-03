@@ -1,4 +1,4 @@
-import {create} from './lib/server.mjs';
+import { create } from './lib/server.mjs';
 
 function incito(arg) {
   const instance = create(arg);

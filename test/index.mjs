@@ -4,7 +4,7 @@ import test from 'ava';
 
 import incito from '../index.mjs';
 
-test('incito', t => {
+test('incito', (t) => {
   let instance = incito();
   t.true(instance instanceof net.Server);
   t.truthy(instance.port);
@@ -25,5 +25,4 @@ test('incito', t => {
   t.falsy(descriptor.writable);
   t.falsy(descriptor.value);
   t.falsy(descriptor.set);
-
 });
