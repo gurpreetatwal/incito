@@ -8,24 +8,6 @@ const https = require('https');
 const process = require('process');
 const server = require('../../lib/server');
 
-test.serial.cb('warn', t => {
-
-  const emit = process.emitWarning;
-  const warn = global.console.warn;
-
-  delete process.emitWarning;
-  global.console.warn = function(msg) {
-    t.is(msg, 'incito: warning, test');
-    t.end();
-  };
-
-  server.warn('test');
-
-  process.emitWarning = emit;
-  global.console.warn = warn;
-
-});
-
 test('normalizeType', t => {
 
   t.is(server.normalizeType(net), net);
@@ -108,10 +90,6 @@ test('normalizeArg', t => {
 
 test.serial.cb('normalizeArg - warning - tls', t => {
 
-  if (!process.emitWarning) {
-    return t.end();
-  }
-
   const listener = warning => {
     t.is(warning.name, 'incito');
     t.true(warning.message.includes('tls'));
@@ -135,10 +113,6 @@ test.serial.cb('normalizeArg - warning - tls', t => {
 });
 
 test.serial.cb('normalizeArg - warning - https', t => {
-
-  if (!process.emitWarning) {
-    return t.end();
-  }
 
   const listener = warning => {
     t.is(warning.name, 'incito');
