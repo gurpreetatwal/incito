@@ -9,6 +9,7 @@ test('incito', (t) => {
   t.true(instance instanceof net.Server);
   t.truthy(instance.port);
   t.true(instance.listening);
+  instance.close();
 
   const server = net.createServer();
   server.listen(34532);
@@ -17,6 +18,7 @@ test('incito', (t) => {
   t.true(instance instanceof net.Server);
   t.is(instance.port, 34532);
   t.true(instance.listening);
+  instance.close();
 
   const descriptor = Object.getOwnPropertyDescriptor(instance, 'port');
   t.true(descriptor.enumerable);

@@ -3,6 +3,7 @@ import tls from 'node:tls';
 import http from 'node:http';
 import https from 'node:https';
 import process from 'node:process';
+import { once } from 'node:events';
 
 import test from 'ava';
 
@@ -88,15 +89,8 @@ test('normalizeArg', (t) => {
   t.is(Object.keys(noOptions).length, 3);
 });
 
-test.serial.cb('normalizeArg - warning - tls', (t) => {
-  const listener = (warning) => {
-    t.is(warning.name, 'incito');
-    t.true(warning.message.includes('tls'));
-    process.removeListener('warning', listener);
-    t.end();
-  };
-
-  process.on('warning', listener);
+test.serial('normalizeArg - warning - tls', async (t) => {
+  const event = once(process, 'warning');
 
   function mock() {}
   const args = server.normalizeArg({
@@ -104,27 +98,28 @@ test.serial.cb('normalizeArg - warning - tls', (t) => {
     listener: mock,
   });
 
+  const [warning] = await event;
+  t.is(warning.name, 'incito');
+  t.true(warning.message.includes('tls'));
+
   t.is(args.type, tls);
   t.is(args.listener, mock);
   t.is(typeof args.options, 'object');
   t.is(Object.keys(args).length, 3);
 });
 
-test.serial.cb('normalizeArg - warning - https', (t) => {
-  const listener = (warning) => {
-    t.is(warning.name, 'incito');
-    t.true(warning.message.includes('https'));
-    process.removeListener('warning', listener);
-    t.end();
-  };
-
-  process.on('warning', listener);
+test.serial('normalizeArg - warning - https', async (t) => {
+  const event = once(process, 'warning');
 
   function mock() {}
   const args = server.normalizeArg({
     type: 'https',
     listener: mock,
   });
+
+  const [warning] = await event;
+  t.is(warning.name, 'incito');
+  t.true(warning.message.includes('https'));
 
   t.is(args.type, https);
   t.is(args.listener, mock);
