@@ -1,9 +1,9 @@
 language: node_js
 
 node_js:
-  - '14'
-  - '12'
-  - '10'
+  - '24'
+  - '22'
+  - '20'
 
 cache:
   directories:
@@ -25,5 +25,5 @@ after_success:
 jobs:
   include:
     - stage: publish
-      node_js: '14'
+      node_js: '22'
       script: semantic-release
