@@ -2,7 +2,8 @@
   "name": "incito",
   "version": "0.0.0-semantic-release",
   "description": "Easiest way to turn a function into a web server!",
-  "main": "index.js",
+  "type": "module",
+  "exports": "./index.mjs",
   "scripts": {
     "test": "ava",
     "posttest": "npm run lint -s",
@@ -17,7 +18,7 @@
     "node": ">=20.0.0"
   },
   "files": [
-    "index.js",
+    "index.mjs",
     "lib"
   ],
   "keywords": [

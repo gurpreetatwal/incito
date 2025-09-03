@@ -1,12 +1,12 @@
-'use strict';
+import net from 'node:net';
+import tls from 'node:tls';
+import http from 'node:http';
+import https from 'node:https';
+import process from 'node:process';
 
-const net = require('net');
-const tls = require('tls');
-const test = require('ava');
-const http = require('http');
-const https = require('https');
-const process = require('process');
-const server = require('../../lib/server');
+import test from 'ava';
+
+import * as server from '../../lib/server.mjs';
 
 test('normalizeType', t => {
 

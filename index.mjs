@@ -1,9 +1,7 @@
-'use strict';
-
-const server = require('./lib/server');
+import {create} from './lib/server.mjs';
 
 function incito(arg) {
-  const instance = server.create(arg);
+  const instance = create(arg);
 
   if (!instance.listening) {
     instance.listen(0);
@@ -22,4 +20,4 @@ function incito(arg) {
   return instance;
 }
 
-module.exports = incito;
+export default incito;

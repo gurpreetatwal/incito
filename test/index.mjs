@@ -1,11 +1,10 @@
-'use strict';
+import net from 'node:net';
 
-const net = require('net');
-const test = require('ava');
-const incito = require('..');
+import test from 'ava';
+
+import incito from '../index.mjs';
 
 test('incito', t => {
-
   let instance = incito();
   t.true(instance instanceof net.Server);
   t.truthy(instance.port);

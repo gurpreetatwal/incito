@@ -14,7 +14,7 @@ npm install incito --save
 ```
 
 ```js
-const incito = require('incito');
+import incito from 'incito';
 ```
 
 ## Usage
