@@ -54,7 +54,7 @@ const server = incito(app);
 ```js
 const server = incito({
   type: 'https',
-  listener: app
+  listener: app,
   options: {
     key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
     cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem'),
