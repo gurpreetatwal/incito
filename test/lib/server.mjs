@@ -31,6 +31,11 @@ test('normalizeType', (t) => {
     instanceOf: ReferenceError,
     message: /"type" argument must be one of: /,
   });
+
+  t.throws(() => server.normalizeType('constructor'), {
+    instanceOf: ReferenceError,
+    message: /"type" argument must be one of: /,
+  });
 });
 
 test('normalizeArg', (t) => {
