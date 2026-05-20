@@ -2,10 +2,9 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/incito"><img src="https://img.shields.io/npm/v/incito.svg?style=flat-square" alt="NPM Package"></a>
-  <a href="https://travis-ci.com/gurpreetatwal/incito"><img src="https://img.shields.io/travis/com/gurpreetatwal/incito/master?style=flat-square" alt="Build Status"></a>
+  <a href="https://github.com/gurpreetatwal/incito/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/gurpreetatwal/incito/ci.yml?style=flat-square" alt="Build Status"></a>
   <a href="https://codecov.io/gh/gurpreetatwal/incito"><img src="https://img.shields.io/codecov/c/github/gurpreetatwal/incito.svg?style=flat-square" alt="Coverage"></a>
 </p>
-
 
 ## Installation
 
@@ -14,17 +13,20 @@ npm install incito --save
 ```
 
 ```js
-const incito = require('incito');
+import incito from 'incito';
 ```
 
 ## Usage
+
 ### simple http server
+
 ```js
 const server = incito();
 const port = server.port;
 ```
 
 ### http server with listener
+
 ```js
 function handle() {
   // magical request handling code
@@ -34,24 +36,28 @@ const server = incito(handle);
 ```
 
 ### express http server
+
 ```js
 const app = express();
 const server = incito(app);
 ```
 
 ### koa http server
+
 ```js
 const app = new Koa();
-const server = incito(app.callback());
+const server = incito(app);
 ```
 
 ### other types of servers
+
 ```js
 const server = incito({
   type: 'https',
-  listener: app
+  listener: app,
   options: {
     key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
     cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem'),
   },
 });
+```

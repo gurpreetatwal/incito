@@ -1,33 +1,15 @@
-'use strict';
+import net from 'node:net';
+import tls from 'node:tls';
+import http from 'node:http';
+import https from 'node:https';
+import process from 'node:process';
+import { once } from 'node:events';
 
-const net = require('net');
-const tls = require('tls');
-const test = require('ava');
-const http = require('http');
-const https = require('https');
-const process = require('process');
-const server = require('../../lib/server');
+import test from 'ava';
 
-test.serial.cb('warn', t => {
+import * as server from '../../lib/server.mjs';
 
-  const emit = process.emitWarning;
-  const warn = global.console.warn;
-
-  delete process.emitWarning;
-  global.console.warn = function(msg) {
-    t.is(msg, 'incito: warning, test');
-    t.end();
-  };
-
-  server.warn('test');
-
-  process.emitWarning = emit;
-  global.console.warn = warn;
-
-});
-
-test('normalizeType', t => {
-
+test('normalizeType', (t) => {
   t.is(server.normalizeType(net), net);
   t.is(server.normalizeType('net'), net);
 
@@ -40,25 +22,23 @@ test('normalizeType', t => {
   t.is(server.normalizeType(https), https);
   t.is(server.normalizeType('https'), https);
 
-  t.throws(function() {
-    server.normalizeType({});
-  }, {
+  t.throws(() => server.normalizeType({}), {
     instanceOf: TypeError,
     message: '"type" argument must be a string',
   });
 
+  t.throws(() => server.normalizeType('tron'), {
+    instanceOf: ReferenceError,
+    message: /"type" argument must be one of: /,
+  });
 
-  t.throws(function() {
-    server.normalizeType('tron');
-  }, {
+  t.throws(() => server.normalizeType('constructor'), {
     instanceOf: ReferenceError,
     message: /"type" argument must be one of: /,
   });
 });
 
-
-test('normalizeArg', t => {
-
+test('normalizeArg', (t) => {
   const noArg = server.normalizeArg();
   t.is(noArg.type, http);
   t.is(Object.keys(noArg).length, 1);
@@ -72,7 +52,6 @@ test('normalizeArg', t => {
   t.is(fn.listener, mock);
   t.is(fn.type, http);
   t.is(Object.keys(fn).length, 2);
-
 
   const noType = server.normalizeArg({
     listener: mock,
@@ -103,23 +82,29 @@ test('normalizeArg', t => {
   t.is(noOptions.listener, mock);
   t.is(typeof noOptions.options, 'object');
   t.is(Object.keys(noOptions).length, 3);
-
 });
 
-test.serial.cb('normalizeArg - warning - tls', t => {
+test('normalizeArg - koa', (t) => {
+  function listener() {}
+  const app = { callback: () => listener };
 
-  if (!process.emitWarning) {
-    return t.end();
+  const result = server.normalizeArg(app);
+  t.is(result.type, http);
+  t.is(result.listener, listener);
+  t.is(Object.keys(result).length, 2);
+});
+
+test('normalizeArg - invalid input', (t) => {
+  for (const invalid of [null, 42, 'http', true, Symbol()]) {
+    t.throws(() => server.normalizeArg(invalid), {
+      instanceOf: TypeError,
+      message: '"arg" must be a function, Koa app, or config object',
+    });
   }
+});
 
-  const listener = warning => {
-    t.is(warning.name, 'incito');
-    t.true(warning.message.includes('tls'));
-    process.removeListener('warning', listener);
-    t.end();
-  };
-
-  process.on('warning', listener);
+test.serial('normalizeArg - warning - tls', async (t) => {
+  const event = once(process, 'warning');
 
   function mock() {}
   const args = server.normalizeArg({
@@ -127,27 +112,18 @@ test.serial.cb('normalizeArg - warning - tls', t => {
     listener: mock,
   });
 
+  const [warning] = await event;
+  t.is(warning.name, 'incito');
+  t.true(warning.message.includes('tls'));
+
   t.is(args.type, tls);
   t.is(args.listener, mock);
   t.is(typeof args.options, 'object');
   t.is(Object.keys(args).length, 3);
-
 });
 
-test.serial.cb('normalizeArg - warning - https', t => {
-
-  if (!process.emitWarning) {
-    return t.end();
-  }
-
-  const listener = warning => {
-    t.is(warning.name, 'incito');
-    t.true(warning.message.includes('https'));
-    process.removeListener('warning', listener);
-    t.end();
-  };
-
-  process.on('warning', listener);
+test.serial('normalizeArg - warning - https', async (t) => {
+  const event = once(process, 'warning');
 
   function mock() {}
   const args = server.normalizeArg({
@@ -155,15 +131,17 @@ test.serial.cb('normalizeArg - warning - https', t => {
     listener: mock,
   });
 
+  const [warning] = await event;
+  t.is(warning.name, 'incito');
+  t.true(warning.message.includes('https'));
+
   t.is(args.type, https);
   t.is(args.listener, mock);
   t.is(typeof args.options, 'object');
   t.is(Object.keys(args).length, 3);
-
 });
 
-test('create', t => {
-
+test('create', (t) => {
   const noArg = server.create();
   t.true(noArg instanceof http.Server);
   t.is(noArg.listenerCount('request'), 0);
@@ -204,5 +182,4 @@ test('create', t => {
   t.true(options instanceof net.Server);
   t.is(options.listenerCount('request'), 0);
   t.true(options.allowHalfOpen);
-
 });
